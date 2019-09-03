@@ -273,7 +273,9 @@ Polyglot.prototype.locale = function (newLocale) {
 Polyglot.prototype.extend = function (morePhrases, prefix) {
   forEach(morePhrases, function (phrase, key) {
     var prefixedKey = prefix ? prefix + '.' + key : key;
-    if (typeof phrase === 'object') {
+    if(Array.isArray(phrase)){
+      this.phrases[prefixedKey] = phrase
+    } else if (typeof phrase === 'object') {
       this.extend(phrase, prefixedKey);
     } else {
       this.phrases[prefixedKey] = phrase;
