@@ -274,7 +274,15 @@ Polyglot.prototype.extend = function (morePhrases, prefix) {
   forEach(morePhrases, function (phrase, key) {
     var prefixedKey = prefix ? prefix + '.' + key : key;
     if(Array.isArray(phrase)){
-      this.phrases[prefixedKey] = phrase
+      if(Array.isArray(this.phrases[prefixedKey])){
+        for(const k in this.phrases){
+          if(k.substr(0, prefixedKey.length) == prefixedKey){
+            delete this.phrases[k]
+          }
+        }
+      }
+      this.phrases[prefixedKey] = []
+      this.extend(phrase, prefixedKey);
     } else if (typeof phrase === 'object') {
       this.extend(phrase, prefixedKey);
     } else {
